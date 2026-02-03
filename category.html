@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>カテゴリ分けツール</title>
+</head>
+<body>
+  <div>項目-カテゴリ</div>
+  <form id="form1" action="#">
+    <div>
+      <textarea id="list1" cols=20 rows=10></textarea>
+      <textarea id="list2" cols=20 rows=10></textarea>
+    </div>
+    <div>
+      <label><input type="checkbox" id="cb1" value="only1" checked /> 各カテゴリにつき1つのみとする</label><br>
+      <label><input type="checkbox" id="cb2" value="gyokan" checked /> カテゴリごとに行間</label><br>
+      <label><input type="checkbox" id="cb3" value="kakomi" checked /> カテゴリを囲む</label><br>
+      <label><input type="checkbox" id="cb4" value="gyoto"> カテゴリ行頭の文字削除</label><br>
+      <label><input type="checkbox" id="cb5" value="emptyskip"> 空のカテゴリ削除</label><br>
+	  <label><input type="checkbox" id="cb6" value="fulfill" checked /> すべてのカテゴリを埋める</label><br>
+    </div>
+    <div>
+      <input type="button" onclick="func2()" value="セレクト">
+	  <input type="button" onclick="func3()" value="1組だけセレクト">
+    </div>
+    <div>
+      <textarea id="list3" cols=40 rows=20></textarea>
+    </div>
+  </form>
+  <div id="output_message"></div>
+  <br>
+  <script src="hello_241117.js">
+  </script>
+</body>
+</html>
