@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Random Selector Pair</title>
+<style>
+    body {
+        font-family: sans-serif;
+        margin: 20px;
+    }
+    textarea {
+        width: 600px;
+        height: 120px;
+        margin-bottom: 10px;
+        font-size: 14px;
+    }
+    .imageAreaClass {
+        width: 400px;
+        height: 400px;
+        border: 1px solid #aaa;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 10px;
+        background-color: #f8f8f8;
+    }
+    .imageAreaClass img {
+        width: 98%;
+        height: 98%;
+        object-fit: contain;
+    }
+    #displayContainer {
+        display: flex;
+        gap: 10px; /* 画像1と画像2の間隔 */
+        align-items: flex-start;
+    }
+</style>
+</head>
+<body>
+<p>Category</p>
+<div><textarea id="textInput"></textarea></div>
+
+<div>
+<button id="uploadBtn">ファイル選択</button>
+<input type="file" id="fileInput" accept="image/*" multiple style="display:none;">
+<button id="selectBtn">セレクト</button>
+<button id="clearBtn">クリア</button>
+</div>
+
+<br>
+<div id="displayContainer">
+    <div id="imageArea" class="imageAreaClass" style="background-color: #87cceb";></div>
+    <div id="imageArea2" class="imageAreaClass" style="background-color: #ffc0cb";></div>
+</div>
+<textarea id="textOutput" readonly></textarea>
+<div><button id="selectBtn2">Select</button></div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<p>***</p>
+
+<script>
+    const fileInput = document.getElementById("fileInput");
+    const uploadBtn = document.getElementById("uploadBtn");
+    const selectBtn = document.getElementById("selectBtn");
+    const selectBtn2 = document.getElementById("selectBtn2");
+    const clearBtn = document.getElementById("clearBtn");
+    const imageArea = document.getElementById("imageArea");
+    const imageArea2 = document.getElementById("imageArea2");
+    const textInput = document.getElementById("textInput");
+    const textOutput = document.getElementById("textOutput");
+
+    // メモリ上に保持する画像データ（DataURL）
+    let images = [];
+
+    // 画像アップロードボタン → input[type=file] を開く
+    uploadBtn.addEventListener("click", () => {
+        fileInput.click();
+    });
+
+    // ファイル選択時
+    fileInput.addEventListener("change", (event) => {
+        const files = event.target.files;
+        images = []; // 新規アップロードでリセット（必要なら push 追加方式にもできる）
+
+        Array.from(files).forEach(file => {
+            const reader = new FileReader();
+            reader.onload = e => {
+                images.push(e.target.result);
+            };
+            reader.readAsDataURL(file);
+        });
+    });
+
+    // セレクトボタン
+    let selectfn = () => {
+        // テキスト行を抽出（空行除外）
+        let rawlines = textInput.value
+            .split(/\r?\n/)
+            .map(line => line.trim());
+        if (rawlines.length >= 3 && rawlines[0].length != 0 && rawlines[1].length == 0) {
+            rawlines.splice(0, 2);
+        }
+        const lines = rawlines
+            .filter(line => line.length > 0);
+
+        if (lines.length === 0) {
+            alert("テキストがありません。");
+            return;
+        }
+        if (images.length === 0) {
+            alert("画像がアップロードされていません。");
+            return;
+        }
+
+        // ランダム選択
+        const randomText = lines[Math.floor(Math.random() * lines.length)];
+        const randomImage = images[Math.floor(Math.random() * images.length)];
+        const randomImage2 = images[Math.floor(Math.random() * images.length)];
+
+        // テキスト表示
+        textOutput.value = randomText;
+
+        // 画像表示
+        imageArea.innerHTML = "";
+        const img = document.createElement("img");
+        img.src = randomImage;
+        imageArea.appendChild(img);
+
+        // 画像表示2
+        imageArea2.innerHTML = "";
+        const img2 = document.createElement("img");
+        img2.src = randomImage2;
+        imageArea2.appendChild(img2);
+
+    };
+
+    selectBtn.addEventListener("click",selectfn);
+    selectBtn2.addEventListener("click",selectfn);
+
+    // クリアボタン
+    clearBtn.addEventListener("click", () => {
+      textInput.value = "";
+    })
+</script>
+
+</body>
+</html>
